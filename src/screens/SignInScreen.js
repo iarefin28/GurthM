@@ -33,24 +33,24 @@ const SignInScreen = () => {
 
         Animated.parallel([scaleAnimation, fadeAnimation, spinAnimation]).start();
 
-        // Stop the spinning animation after a certain delay (e.g., 3000 milliseconds)
         const spinTimeout = setTimeout(() => {
             spinAnimation.stop(); // Stop the spinning animation
-            }, 1000); // Set the duration for how long the spinning animation should run
-        
-            return () => clearTimeout(spinTimeout); // Clean up the timeout
+
+            // Set the spin animation value to 0 (0 degrees) manually
+            spinAnim.setValue(0);
+        }, 1000);
 
     }, [scaleAnim, fadeAnim, spinAnim]);
 
 
     const scaleValue = scaleAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [0.25, 1], // Start from quarter of the size and grow to full size
+        outputRange: [0, 1], // Start from 0% of the size and grow to full size
     });
 
     const spin = spinAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: ['90deg', '360deg'],
+        outputRange: ['0deg', '360deg'],
     });
 
     return (
