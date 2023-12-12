@@ -1,13 +1,17 @@
 import React from "react";
 import { useRef, useEffect } from "react";
 import { StyleSheet, Text, View, Image, useWindowDimensions, Animated, Easing } from 'react-native';
-import Logo from '../../assets/Logo.png'; 
+import Logo from '../../assets/Logo.png';
+import AppleLoginButton from "./components/AppleLoginButton";
 
-const SignInScreen = () => { 
-    const {height} = useWindowDimensions()
+
+const SignInScreen = () => {
+    const { height } = useWindowDimensions()
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const scaleAnim = useRef(new Animated.Value(0)).current;
     const spinAnim = useRef(new Animated.Value(0)).current;
+    const slideAnim = useRef(new Animated.Value(1000)).current; // Initial position off the screen
+
 
 
     useEffect(() => {
@@ -31,7 +35,14 @@ const SignInScreen = () => {
             })
         );
 
-        Animated.parallel([scaleAnimation, fadeAnimation, spinAnimation]).start();
+        const slideAnimation = Animated.timing(slideAnim, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: true,
+        });
+
+        Animated.parallel([scaleAnimation, fadeAnimation, spinAnimation, slideAnimation]).start();
+
 
         const spinTimeout = setTimeout(() => {
             spinAnimation.stop(); // Stop the spinning animation
@@ -40,7 +51,7 @@ const SignInScreen = () => {
             spinAnim.setValue(0);
         }, 1000);
 
-    }, [scaleAnim, fadeAnim, spinAnim]);
+    }, [scaleAnim, fadeAnim, spinAnim, slideAnim]);
 
 
     const scaleValue = scaleAnim.interpolate({
@@ -53,34 +64,62 @@ const SignInScreen = () => {
         outputRange: ['0deg', '360deg'],
     });
 
+
+
     return (
         <View style={styles.root}>
-            <Animated.Image 
-                source={Logo} 
-                style={[
-                    styles.logo, 
-                    {
-                        height: height * 0.3, 
-                        opacity: fadeAnim, 
-                        transform: [{ scale: scaleValue }, { rotate: spin }],
-                    }
-                ]}
-                resizeMode="contain"
+            <View style={styles.logoContainer}>
+                <Animated.Image
+                    source={Logo}
+                    style={[
+                        styles.logo,
+                        {
+                            height: height * 0.3,
+                            opacity: fadeAnim,
+                            transform: [{ scale: scaleValue }, { rotate: spin }],
+                        }
+                    ]}
+                    resizeMode="contain"
                 />
+            </View>
+            <Animated.View style={[styles.loginOptions, { transform: [{ translateY: slideAnim }] }]}>
+                <AppleLoginButton />
+                <AppleLoginButton />
+                <AppleLoginButton />
+                <AppleLoginButton />
+            </Animated.View>
         </View>
     )
-} 
+}
 
 const styles = StyleSheet.create({
-    root:{
-        alignItems: "center",
-        padding: 30 
+    root: {
+        justifyContent: "center",
+        flex: 1,
+        flexDirection: 'column'
+    },
+    logoContainer: {
+        height: '65%',
+        alignItems: 'center',
+        padding: 40,
+        flex: 1
     },
     logo: {
-        width: '50%', 
+        width: '50%',
         maxWidth: '300',
-        maxHeight: 300,     
+        maxHeight: 300,
+    },
+    loginOptions: {
+        height: '35%',
+        backgroundColor: "black",
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        alignItems: 'center',
+        flexDirection: 'column',
+        padding: 25,
     }
 })
 
 export default SignInScreen;
+
+

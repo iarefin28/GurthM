@@ -14,9 +14,9 @@ export default function App() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <SafeAreaView style={styles.root}>
+      <View style={styles.root}>
         <SignInScreen />
-      </SafeAreaView>
+      </View>
     </LinearGradient>
   )
 }
