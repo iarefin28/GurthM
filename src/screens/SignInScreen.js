@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import { StyleSheet, Text, View, Image, useWindowDimensions, Animated, Easing } from 'react-native';
 import Logo from '../../assets/Logo.png';
 import AppleLoginButton from "./components/AppleLoginButton";
+import GoogleLoginButton from "./components/GoogleLoginButton";
 
 
 const SignInScreen = () => {
@@ -84,7 +85,7 @@ const SignInScreen = () => {
             </View>
             <Animated.View style={[styles.loginOptions, { transform: [{ translateY: slideAnim }] }]}>
                 <AppleLoginButton />
-                <AppleLoginButton />
+                <GoogleLoginButton/>
                 <AppleLoginButton />
                 <AppleLoginButton />
             </Animated.View>
