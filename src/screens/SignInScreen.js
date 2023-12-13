@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Image, useWindowDimensions, Animated, Easing } 
 import Logo from '../../assets/Logo.png';
 import AppleLoginButton from "./components/AppleLoginButton";
 import GoogleLoginButton from "./components/GoogleLoginButton";
-
+import SignUpWithEmailButton from "./components/SignUpWithEmailButton";
+import LoginWithEmailButton from "./components/LogInWithEmailButton.js";
 
 const SignInScreen = () => {
     const { height } = useWindowDimensions()
@@ -86,7 +87,8 @@ const SignInScreen = () => {
             <Animated.View style={[styles.loginOptions, { transform: [{ translateY: slideAnim }] }]}>
                 <AppleLoginButton />
                 <GoogleLoginButton/>
-                
+                <SignUpWithEmailButton/>
+                <LoginWithEmailButton/>
             </Animated.View>
         </View>
     )

@@ -2,15 +2,15 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 
-const GoogleLoginButton = () => {
+const SignUpWithEmailButton = () => {
     return (
         <TouchableOpacity onPress={null} style={styles.buttonContainer}>
             <Image
-                source={require('../../../assets/GoogleButtonIcon.png')}
+                source={require('../../../assets/EmailIconWhite.png')}
                 resizeMode="contain"
-                style={styles.googleIcon}
+                style={styles.emailIcon}
             />
-            <Text style={styles.buttonDescription}>Continue with Google</Text>
+            <Text style={styles.buttonDescription}>Sign up with email</Text>
         </TouchableOpacity>
     )
 }
@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 4,
     },
-    googleIcon: {
+    emailIcon: {
         height: '100%',
-        width: "6%",
+        width: "7%",
     },
     buttonDescription: {
         fontFamily: 'System',
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default GoogleLoginButton
+export default SignUpWithEmailButton
