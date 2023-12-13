@@ -6,7 +6,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 const AppleLoginButton = () => { 
     return (
         <AppleAuthentication.AppleAuthenticationButton
-            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
             buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
             cornerRadius={10}
             style={styles.button}

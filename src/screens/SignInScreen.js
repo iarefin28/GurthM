@@ -86,8 +86,7 @@ const SignInScreen = () => {
             <Animated.View style={[styles.loginOptions, { transform: [{ translateY: slideAnim }] }]}>
                 <AppleLoginButton />
                 <GoogleLoginButton/>
-                <AppleLoginButton />
-                <AppleLoginButton />
+                
             </Animated.View>
         </View>
     )
