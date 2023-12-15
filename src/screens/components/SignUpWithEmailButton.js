@@ -1,10 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 
 
 const SignUpWithEmailButton = () => {
+    const navigation = useNavigation()
+
+    const navigateToInformationEntryScreen = () => {
+        navigation.navigate('InformationEntryScreen');
+    };
+
     return (
-        <TouchableOpacity onPress={null} style={styles.buttonContainer}>
+        <TouchableOpacity onPress={navigateToInformationEntryScreen} style={styles.buttonContainer}>
             <Image
                 source={require('../../../assets/EmailIconWhite.png')}
                 resizeMode="contain"

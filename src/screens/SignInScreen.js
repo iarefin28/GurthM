@@ -6,15 +6,21 @@ import AppleLoginButton from "./components/AppleLoginButton";
 import GoogleLoginButton from "./components/GoogleLoginButton";
 import SignUpWithEmailButton from "./components/SignUpWithEmailButton";
 import LoginWithEmailButton from "./components/LogInWithEmailButton.js";
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { LinearGradient } from "expo-linear-gradient";
+
 
 const SignInScreen = () => {
+    const navigation = useNavigation();
     const { height } = useWindowDimensions()
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const scaleAnim = useRef(new Animated.Value(0)).current;
     const spinAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(1000)).current; // Initial position off the screen
 
-
+    useFocusEffect(() => {
+        navigation.setOptions({ headerShown: false });
+    });
 
     useEffect(() => {
         const scaleAnimation = Animated.timing(scaleAnim, {
@@ -69,28 +75,35 @@ const SignInScreen = () => {
 
 
     return (
-        <View style={styles.root}>
-            <View style={styles.logoContainer}>
-                <Animated.Image
-                    source={Logo}
-                    style={[
-                        styles.logo,
-                        {
-                            height: height * 0.3,
-                            opacity: fadeAnim,
-                            transform: [{ scale: scaleValue }, { rotate: spin }],
-                        }
-                    ]}
-                    resizeMode="contain"
-                />
+        <LinearGradient
+            colors={['#000000', '#2c3e50']}
+            style={{ flex: 1 }}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+        >
+            <View style={styles.root}>
+                <View style={styles.logoContainer}>
+                    <Animated.Image
+                        source={Logo}
+                        style={[
+                            styles.logo,
+                            {
+                                height: height * 0.3,
+                                opacity: fadeAnim,
+                                transform: [{ scale: scaleValue }, { rotate: spin }],
+                            }
+                        ]}
+                        resizeMode="contain"
+                    />
+                </View>
+                <Animated.View style={[styles.loginOptions, { transform: [{ translateY: slideAnim }] }]}>
+                    <AppleLoginButton />
+                    <GoogleLoginButton />
+                    <SignUpWithEmailButton />
+                    <LoginWithEmailButton />
+                </Animated.View>
             </View>
-            <Animated.View style={[styles.loginOptions, { transform: [{ translateY: slideAnim }] }]}>
-                <AppleLoginButton />
-                <GoogleLoginButton/>
-                <SignUpWithEmailButton/>
-                <LoginWithEmailButton/>
-            </Animated.View>
-        </View>
+        </LinearGradient>
     )
 }
 
@@ -114,6 +127,7 @@ const styles = StyleSheet.create({
     loginOptions: {
         height: '35%',
         backgroundColor: "black",
+        opacity: 0.7,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         alignItems: 'center',
