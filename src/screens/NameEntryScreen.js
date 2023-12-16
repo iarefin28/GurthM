@@ -5,7 +5,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from "expo-linear-gradient";
 import GurthInput from "./components/GurthInput";
 
-const InformationEntryScreen = () => {
+const NameEntryScreen = () => {
     const navigation = useNavigation()
 
     useFocusEffect(() => {
@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
     }
 })
 
-export default InformationEntryScreen;
+export default NameEntryScreen;
 
 
