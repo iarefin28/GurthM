@@ -1,11 +1,20 @@
 import React from "react"
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 const GurthInput = ({ placeholder, type, onTextChange }) => {
     const [isFocused, setIsFocused] = useState(false)
     const [text, setText] = useState("")
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        const delayKeyboardAppearance = setTimeout(() => {
+            inputRef.current.focus();
+        }, 250); // Adjust the delay time (in milliseconds) as needed
+
+        return () => clearTimeout(delayKeyboardAppearance);
+    }, []);
 
     const handleFocus = () => {
         setIsFocused(true)
@@ -24,7 +33,7 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
         <View style={styles.root}>
             <View style={styles.overlay} />
             <View style={[styles.inputMainContainer, isFocused && { borderColor: "white" }]}>
-                <View style={[styles.inputSubContainer, (text && isFocused) ? {width: "80%"} : {width: "100%"}]}>
+                <View style={[styles.inputSubContainer, ((text && isFocused) || type === "password") ? { width: "80%" } : { width: "100%" }]}>
                     {(isFocused || text) &&
                         <Text
                             style={[styles.inputType, isFocused ? { color: "white" } : { color: "gray" }]}>
@@ -32,7 +41,8 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
                         </Text>
                     }
                     <TextInput
-                        secureTextEntry={type==="password" ? true : false}
+                        ref={inputRef}
+                        secureTextEntry={type === "password" ? true : false}
                         style={[styles.input, (isFocused || text) ? { height: "35%" } : { height: "100%" }]}
                         placeholder={isFocused ? "" : placeholder}
                         placeholderTextColor={isFocused ? "white" : "gray"}
@@ -42,12 +52,19 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
                         returnKeyType='done'
                     />
                 </View>
-                {text && isFocused && type==="name" &&
-                <View style={styles.additionalFunctionality}>
-                    <TouchableOpacity>
-                        <Entypo name="cross" size={25} color="white" />
-                    </TouchableOpacity>
-                </View>
+                {text && isFocused && type === "name" &&
+                    <View style={styles.additionalFunctionality}>
+                        <TouchableOpacity>
+                            <Entypo name="cross" size={25} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                }
+                {(isFocused || text) && type === "password" &&
+                    <View style={styles.additionalFunctionality}>
+                        <TouchableOpacity>
+                            <Entypo name="eye-with-line" size={23} color="white" />
+                        </TouchableOpacity>
+                    </View>
                 }
             </View>
         </View>

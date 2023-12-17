@@ -4,10 +4,17 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const NextButton = ({nextScreen, ready}) => {
+    const navigation = useNavigation()
+    console.log(nextScreen)
+    const navigateNextScreen = () => {
+        navigation.navigate(nextScreen);
+    };
+
     return (
         <TouchableOpacity 
             style={styles.container}
             disabled={ready}
+            onPress={navigateNextScreen}
         >
             <LinearGradient
                 colors={['#485461', '#28313b']}

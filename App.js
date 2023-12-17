@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import SignInScreen from './src/screens/SignInScreen';
 import NameEntryScreen from './src/screens/NameEntryScreen';
+import PasswordEntryScreen from './src/screens/PasswordEntryScreen';
 import * as Font from 'expo-font';
 
 export default function App() {
@@ -33,7 +34,8 @@ export default function App() {
         <View style={styles.root}>
           <Stack.Navigator initialRouteName="SignUpScreen">
             <Stack.Screen name="SignInS" component={SignInScreen} />
-            <Stack.Screen name="InformationEntryScreen" component={NameEntryScreen} />
+            <Stack.Screen name="NameEntryScreen" component={NameEntryScreen} />
+            <Stack.Screen name="PasswordEntryScreen" component={PasswordEntryScreen} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>
