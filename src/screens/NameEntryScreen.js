@@ -38,11 +38,11 @@ const NameEntryScreen = () => {
                     <Text style={styles.purpose}>Add your name so we know what to call you.</Text>
                     <GurthInput
                         placeholder="Full name"
-                        password={false}
+                        type="name"
                         onTextChange={(textValue) => { handleChildInput(textValue) }}
                     />
                     <NextButton
-                        nextScreen="NotApplicableYet"
+                        nextScreen="PasswordEntryScreen"
                         ready={text ? false : true}
                     />
                 </View>
