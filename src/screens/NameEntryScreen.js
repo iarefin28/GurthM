@@ -42,6 +42,8 @@ const NameEntryScreen = () => {
                         onTextChange={(textValue) => { handleChildInput(textValue) }}
                     />
                     <NextButton
+                        typeOfInput={"name"}
+                        input={text}
                         nextScreen="PasswordEntryScreen"
                         ready={text ? false : true}
                     />

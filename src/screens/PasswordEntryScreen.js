@@ -7,9 +7,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import GurthInput from "./components/GurthInput";
 import NextButton from "./components/NextButton";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import { AccountCreationContext } from "../contexts/AccountCreationContext";
 
 const PasswordEntryScreen = () => {
+    const { name } = useContext(AccountCreationContext)
+    console.log("Current Name:")
+    console.log(name)
+
     const navigation = useNavigation()
     const[text, setText] = useState("")
 

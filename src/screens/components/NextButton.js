@@ -1,12 +1,18 @@
-import React from "react";
+import React, {useContext} from "react";
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const NextButton = ({nextScreen, ready}) => {
+import { AccountCreationContext } from "../../contexts/AccountCreationContext";
+
+const NextButton = ({typeOfInput, input, nextScreen, ready}) => {
     const navigation = useNavigation()
+    const { updateName } = useContext(AccountCreationContext);
+
     console.log(nextScreen)
-    const navigateNextScreen = () => {
+    const handleNext = () => {
+        if(typeOfInput === "name") updateName(input)
+
         navigation.navigate(nextScreen);
     };
 
@@ -14,7 +20,7 @@ const NextButton = ({nextScreen, ready}) => {
         <TouchableOpacity 
             style={styles.container}
             disabled={ready}
-            onPress={navigateNextScreen}
+            onPress={handleNext}
         >
             <LinearGradient
                 colors={['#485461', '#28313b']}

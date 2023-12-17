@@ -12,6 +12,9 @@ import NameEntryScreen from './src/screens/NameEntryScreen';
 import PasswordEntryScreen from './src/screens/PasswordEntryScreen';
 import * as Font from 'expo-font';
 
+import { AccountCreationContext } from './src/contexts/AccountCreationContext';
+import { AccountCreationProvider } from './src/contexts/AccountCreationContext';
+
 export default function App() {
   const Stack = createNativeStackNavigator()
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -30,6 +33,7 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
+      <AccountCreationProvider>
       <NavigationContainer>
         <View style={styles.root}>
           <Stack.Navigator initialRouteName="SignUpScreen">
@@ -39,6 +43,7 @@ export default function App() {
           </Stack.Navigator>
         </View>
       </NavigationContainer>
+      </AccountCreationProvider>
     )
   }
 }

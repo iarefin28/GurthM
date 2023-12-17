@@ -9,11 +9,7 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
     const inputRef = useRef(null);
 
     useEffect(() => {
-        const delayKeyboardAppearance = setTimeout(() => {
-            inputRef.current.focus();
-        }, 250); // Adjust the delay time (in milliseconds) as needed
-
-        return () => clearTimeout(delayKeyboardAppearance);
+        inputRef.current.focus();
     }, []);
 
     const handleFocus = () => {
