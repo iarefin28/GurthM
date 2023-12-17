@@ -1,58 +1,89 @@
 import React from "react"
 import { useState } from "react";
-import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-const GurthInput = ({ placeholder, password }) => {
+const GurthInput = ({ placeholder, password, onTextChange }) => {
     const [isFocused, setIsFocused] = useState(false)
+    const [text, setText] = useState("")
 
-    const handleFocus = () => { 
+    const handleFocus = () => {
         setIsFocused(true)
+        placeholder
     }
 
-    const handleBlur = () => { 
+    const handleBlur = () => {
         setIsFocused(false)
     }
 
+    const handleInputChange = (inputText) => {
+        setText(inputText)
+        onTextChange(inputText)
+    }
+
     return (
-        <View>
+        <View style={styles.root}>
             <View style={styles.overlay} />
-            <View style={[styles.inputContainer, isFocused && {borderColor: "white"}]}>
-                <TextInput
-                    secureTextEntry={password}
-                    style={styles.input}
-                    placeholder={placeholder}
-                    placeholderTextColor={isFocused ? "white" : "gray"}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                />
+            <View style={[styles.inputMainContainer, isFocused && { borderColor: "white" }]}>
+                <View style={[styles.inputSubContainer, text ? {width: "80%"} : {width: "100%"}]}>
+                    {(isFocused || text) &&
+                        <Text
+                            style={[styles.inputType, isFocused ? { color: "white" } : { color: "gray" }]}>
+                            {placeholder}
+                        </Text>
+                    }
+                    <TextInput
+                        secureTextEntry={password}
+                        style={[styles.input, (isFocused || text) ? { height: "35%" } : { height: "100%" }]}
+                        placeholder={isFocused ? "" : placeholder}
+                        placeholderTextColor={isFocused ? "white" : "gray"}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        onChangeText={handleInputChange}
+                        returnKeyType='done'
+                    />
+                </View>
+                {text &&
                 <View style={styles.additionalFunctionality}>
                     <TouchableOpacity>
                         <Entypo name="cross" size={25} color="white" />
                     </TouchableOpacity>
                 </View>
+                }
             </View>
         </View>
     )
 }
 
 const styles = new StyleSheet.create({
-    inputContainer: {
+    root: {
+        marginBottom: 20
+    },
+    inputMainContainer: {
         borderWidth: 1,
         borderColor: "gray",
         borderRadius: 5,
         height: 55,
         display: "flex",
         flexDirection: "row",
-        overflow: "hidden"
-
+        overflow: "hidden",
+    },
+    inputSubContainer: {
+        marginLeft: 10,
+        height: "100%",
+        flexDirection: "column",
+        justifyContent: "center"
+    },
+    inputType: {
+        height: "35%",
+        fontFamily: "RethinkSans",
+        fontSize: 14,
+        color: "gray"
     },
     input: {
         color: "white",
         fontFamily: "RethinkSans",
-        marginLeft: 10,
-        height: "100%",
-        width: "80%",
+        fontSize: 15,
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,

@@ -1,11 +1,15 @@
 import React from "react";
 import { useRef, useEffect } from "react";
+
 import { StyleSheet, Text, View, Image, useWindowDimensions, Animated, Easing } from 'react-native';
+
 import Logo from '../../assets/Logo.png';
+
 import AppleLoginButton from "./components/AppleLoginButton";
 import GoogleLoginButton from "./components/GoogleLoginButton";
 import SignUpWithEmailButton from "./components/SignUpWithEmailButton";
 import LoginWithEmailButton from "./components/LogInWithEmailButton.js";
+
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from "expo-linear-gradient";
 

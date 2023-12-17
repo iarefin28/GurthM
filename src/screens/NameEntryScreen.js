@@ -3,10 +3,15 @@ import { StyleSheet, Text, SafeAreaView, View, TextInput } from 'react-native';
 
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from "expo-linear-gradient";
+
 import GurthInput from "./components/GurthInput";
+import NextButton from "./components/NextButton";
+
+import { useState } from "react";
 
 const NameEntryScreen = () => {
     const navigation = useNavigation()
+    const[text, setText] = useState("")
 
     useFocusEffect(() => {
         navigation.setOptions({
@@ -15,6 +20,10 @@ const NameEntryScreen = () => {
             headerTitle: '',
         });
     });
+
+    const handleChildInput = (input) => {
+        setText(input)
+    }
 
     return (
         <LinearGradient
@@ -28,8 +37,13 @@ const NameEntryScreen = () => {
                     <Text style={styles.prompt}>What's your name?</Text>
                     <Text style={styles.purpose}>Add your name so we know what to call you.</Text>
                     <GurthInput
-                        placeholder="Full Name"
+                        placeholder="Full name"
                         password={false}
+                        onTextChange={(textValue) => { handleChildInput(textValue) }}
+                    />
+                    <NextButton
+                        nextScreen="NotApplicableYet"
+                        ready={text ? false : true}
                     />
                 </View>
             </SafeAreaView>
@@ -52,7 +66,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontFamily: 'RethinkSans-Bold',
         fontSize: 28,
-        marginBottom: 5
+        marginBottom: 10
     },
     purpose: {
         color: "white",
