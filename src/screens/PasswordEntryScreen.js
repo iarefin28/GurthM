@@ -12,12 +12,13 @@ import { useState, useContext } from "react";
 import { AccountCreationContext } from "../contexts/AccountCreationContext";
 
 const PasswordEntryScreen = () => {
-    const { name } = useContext(AccountCreationContext)
+    const { name, password } = useContext(AccountCreationContext)
     console.log("Current Name:")
     console.log(name)
+    console.log(password)
 
     const navigation = useNavigation()
-    const[text, setText] = useState("")
+    const [text, setText] = useState("")
 
     useFocusEffect(() => {
         navigation.setOptions({
@@ -42,7 +43,7 @@ const PasswordEntryScreen = () => {
                 <View style={styles.mainContainer}>
                     <Text style={styles.prompt}>Create a password</Text>
                     <Text style={styles.purpose}>
-                        Create a password with at least 6 letters or numbers. It should be something others can't guess. 
+                        Create a password with at least 6 letters or numbers. It should be something others can't guess.
                     </Text>
                     <GurthInput
                         placeholder="Password"
@@ -50,6 +51,8 @@ const PasswordEntryScreen = () => {
                         onTextChange={(textValue) => { handleChildInput(textValue) }}
                     />
                     <NextButton
+                        typeOfInput={"password"}
+                        input={text}
                         nextScreen="PasswordEntryScreen"
                         ready={text ? false : true}
                     />
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginBottom: 20
     },
-    inputContainer:{
+    inputContainer: {
         backgroundColor: "black",
         opacity: 0.3
 

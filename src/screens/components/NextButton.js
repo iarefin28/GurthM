@@ -7,11 +7,13 @@ import { AccountCreationContext } from "../../contexts/AccountCreationContext";
 
 const NextButton = ({typeOfInput, input, nextScreen, ready}) => {
     const navigation = useNavigation()
-    const { updateName } = useContext(AccountCreationContext);
+    const { updateName, updatePassword } = useContext(AccountCreationContext);
 
     console.log(nextScreen)
     const handleNext = () => {
         if(typeOfInput === "name") updateName(input)
+        if(typeOfInput === "password") updatePassword(input)
+
 
         navigation.navigate(nextScreen);
     };
