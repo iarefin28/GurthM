@@ -13,9 +13,9 @@ import { AccountCreationContext } from "../contexts/AccountCreationContext";
 
 const PasswordEntryScreen = () => {
     const { name, password } = useContext(AccountCreationContext)
-    console.log("Current Name:")
-    console.log(name)
-    console.log(password)
+    // console.log("Current Name:")
+    // console.log(name)
+    // console.log(password)
 
     const navigation = useNavigation()
     const [text, setText] = useState("")

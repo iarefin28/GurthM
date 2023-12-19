@@ -6,6 +6,8 @@ import { Entypo } from '@expo/vector-icons';
 const GurthInput = ({ placeholder, type, onTextChange }) => {
     const [isFocused, setIsFocused] = useState(false)
     const [text, setText] = useState("")
+    const [passwordToggle, setPasswordToggle] = useState(type === 'password')
+
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -25,6 +27,16 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
         onTextChange(inputText)
     }
 
+    const handleClearInput = () => {
+        console.log("Clearing input")
+        setText("")
+        onTextChange("")
+    }
+    
+    const handlePasswordToggle = () => {
+        setPasswordToggle(!passwordToggle)
+    }
+
     return (
         <View style={styles.root}>
             <View style={styles.overlay} />
@@ -38,7 +50,8 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
                     }
                     <TextInput
                         ref={inputRef}
-                        secureTextEntry={type === "password" ? true : false}
+                        value={text}
+                        secureTextEntry={passwordToggle}
                         style={[styles.input, (isFocused || text) ? { height: "35%" } : { height: "100%" }]}
                         placeholder={isFocused ? "" : placeholder}
                         placeholderTextColor={isFocused ? "white" : "gray"}
@@ -46,19 +59,21 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
                         onBlur={handleBlur}
                         onChangeText={handleInputChange}
                         returnKeyType='done'
+                        maxLength={50}
                     />
                 </View>
                 {text && isFocused && type === "name" &&
                     <View style={styles.additionalFunctionality}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={handleClearInput}>
                             <Entypo name="cross" size={25} color="white" />
                         </TouchableOpacity>
                     </View>
                 }
                 {(isFocused || text) && type === "password" &&
                     <View style={styles.additionalFunctionality}>
-                        <TouchableOpacity>
-                            <Entypo name="eye-with-line" size={23} color="white" />
+                        <TouchableOpacity onPress={handlePasswordToggle}>
+                            {passwordToggle && <Entypo name="eye-with-line" size={23} color="white" />}
+                            {!passwordToggle && <Entypo name="eye" size={23} color="white" />}
                         </TouchableOpacity>
                     </View>
                 }
