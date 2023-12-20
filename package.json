@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^7.6.2",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "expo": "~49.0.15",
@@ -20,7 +21,8 @@
     "expo-vector-icons": "^10.0.1",
     "firebase": "^10.7.1",
     "react": "^18.2.0",
-    "react-native": "^0.72.6"
+    "react-native": "^0.72.6",
+    "undefined": "react-native-community/datetimepicker"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -2,16 +2,18 @@ import React from "react"
 import { useState, useRef, useEffect } from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-const GurthInput = ({ placeholder, type, onTextChange }) => {
-    const [isFocused, setIsFocused] = useState(false)
-    const [text, setText] = useState("")
+const GurthInput = ({ placeholder, type, onTextChange, date }) => {
+    const [isFocused, setIsFocused] = useState(false || type === "birthday")
+    const [text, setText] = useState(type === "birthday" ? date : "")
     const [passwordToggle, setPasswordToggle] = useState(type === 'password')
 
     const inputRef = useRef(null);
 
     useEffect(() => {
-        inputRef.current.focus();
+        if(type !== "birthday")
+            inputRef.current.focus();
     }, []);
 
     const handleFocus = () => {
@@ -32,10 +34,26 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
         setText("")
         onTextChange("")
     }
-    
+
     const handlePasswordToggle = () => {
         setPasswordToggle(!passwordToggle)
     }
+
+    const formatDate = (date) => {
+        const months = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+      
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      
+        const dayOfWeek = days[date.getDay()];
+        const month = months[date.getMonth()];
+        const day = date.getDate();
+        const year = date.getFullYear();
+      
+        return `${dayOfWeek}, ${month} ${day}, ${year}`;
+      };
 
     return (
         <View style={styles.root}>
@@ -50,7 +68,7 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
                     }
                     <TextInput
                         ref={inputRef}
-                        value={text}
+                        value={date ?  formatDate(date) : text}
                         secureTextEntry={passwordToggle}
                         style={[styles.input, (isFocused || text) ? { height: "35%" } : { height: "100%" }]}
                         placeholder={isFocused ? "" : placeholder}
@@ -60,6 +78,7 @@ const GurthInput = ({ placeholder, type, onTextChange }) => {
                         onChangeText={handleInputChange}
                         returnKeyType='done'
                         maxLength={50}
+                        editable={type==="birthday" ? false : true}
                     />
                 </View>
                 {text && isFocused && type === "name" &&

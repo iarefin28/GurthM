@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Appearance, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import SignInScreen from './src/screens/SignInScreen';
 import NameEntryScreen from './src/screens/NameEntryScreen';
 import PasswordEntryScreen from './src/screens/PasswordEntryScreen';
+import BirthdayEntryScreen from './src/screens/BirthdayEntryScreen';
 import * as Font from 'expo-font';
 
 import { AccountCreationContext } from './src/contexts/AccountCreationContext';
@@ -40,6 +41,7 @@ export default function App() {
             <Stack.Screen name="SignInS" component={SignInScreen} />
             <Stack.Screen name="NameEntryScreen" component={NameEntryScreen} />
             <Stack.Screen name="PasswordEntryScreen" component={PasswordEntryScreen} />
+            <Stack.Screen name="BirthdayEntryScreen" component={BirthdayEntryScreen} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>

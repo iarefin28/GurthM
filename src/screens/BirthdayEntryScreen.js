@@ -9,9 +9,12 @@ import NextButton from "./components/NextButton";
 
 import { useState, useContext } from "react";
 
-const PasswordEntryScreen = () => {
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+
+const BirthdayEntryScreen = () => {
     const navigation = useNavigation()
-    const [text, setText] = useState("")
+    const [text, setText] = useState(new Date())
 
     useFocusEffect(() => {
         navigation.setOptions({
@@ -21,36 +24,54 @@ const PasswordEntryScreen = () => {
         });
     });
 
+    console.log(text.toString())
+
     const handleChildInput = (input) => {
         setText(input)
+    }
+
+    const handleDateChange = (event, selectedDate) => {
+        setText(selectedDate)
     }
 
     return (
         <LinearGradient
             colors={['#000000', '#2c3e50']}
-            style={{ flex: 1 }}
+            style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
         >
             <SafeAreaView style={styles.root}>
                 <View style={styles.mainContainer}>
-                    <Text style={styles.prompt}>Create a password</Text>
+                    <Text style={styles.prompt}>What's your birthday?</Text>
                     <Text style={styles.purpose}>
-                        Create a password with at least 6 letters or numbers. It should be something others can't guess.
+                        Use your own birthday. This information will only be available to you. Why do I need to provide my
+                        birthday?
                     </Text>
                     <GurthInput
-                        placeholder="Password"
-                        type="password"
+                        placeholder="Birthday"
+                        type="birthday"
+                        date={text}
                         onTextChange={(textValue) => { handleChildInput(textValue) }}
                     />
                     <NextButton
-                        typeOfInput={"password"}
+                        typeOfInput={"birthday"}
                         input={text}
-                        nextScreen="BirthdayEntryScreen"
+                        nextScreen="EmailEntryScreen"
                         ready={text ? false : true}
                     />
                 </View>
             </SafeAreaView>
+            <View style={{height: "35%", justifyContent: "center", alignItems: "center"}}>
+                <View style={styles.overlay}/>
+                <DateTimePicker
+                value={text}
+                display="spinner"
+                backgroundColor="transparent"
+                textColor="white"
+                onChange={handleDateChange}
+            />
+            </View>
         </LinearGradient>
     )
 }
@@ -63,8 +84,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         width: '90%',
         flexDirection: 'column',
-        marginTop: 7
-
+        marginTop: 7,
     },
     prompt: {
         color: "white",
@@ -90,9 +110,14 @@ const styles = StyleSheet.create({
         height: 60,
         color: "white",
         fontFamily: "RethinkSans"
-    }
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'black',
+        opacity: 0.7,
+    },
 })
 
-export default PasswordEntryScreen;
+export default BirthdayEntryScreen;
 
 
