@@ -76,9 +76,9 @@ const GurthInput = ({ placeholder, type, onTextChange, date }) => {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         onChangeText={handleInputChange}
-                        returnKeyType='done'
-                        maxLength={50}
+                        maxLength={type==="code" ? 6 : 50}
                         editable={type==="birthday" ? false : true}
+                        keyboardType={type==="code" ? "numeric" : undefined}
                     />
                 </View>
                 {text && isFocused && type === "name" &&
