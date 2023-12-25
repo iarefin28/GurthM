@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, SafeAreaView, View, TextInput } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TextInput, TouchableOpacity } from 'react-native';
 
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,10 +11,19 @@ import { useState, useContext } from "react";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+import { AccountCreationContext } from "../contexts/AccountCreationContext";
+import { FIREBASE_AUTH } from "../../FirebaseConfig.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 const BirthdayEntryScreen = () => {
     const navigation = useNavigation()
     const [text, setText] = useState(new Date())
+    const auth = FIREBASE_AUTH;
+    const { name, password } = useContext(AccountCreationContext);
+
+    console.log(name);
+    console.log(password);
 
     useFocusEffect(() => {
         navigation.setOptions({
@@ -30,8 +39,18 @@ const BirthdayEntryScreen = () => {
         setText(input)
     }
 
-    const handleDateChange = (event, selectedDate) => {
+    const handleDateChange = (event, selectedDate) => {  
         setText(selectedDate)
+    }
+
+    const handleCreateAccount = async () => {
+        try {
+            const response = await createUserWithEmailAndPassword(auth, name, password);
+            console.log(response);
+        } catch (error) {
+            console.log(error)
+            alert("Sign in failed: " +  error.message)
+        }
     }
 
     return (
@@ -60,17 +79,18 @@ const BirthdayEntryScreen = () => {
                         nextScreen="EmailEntryScreen"
                         ready={text ? false : true}
                     />
+                    <TouchableOpacity onPress={handleCreateAccount}><Text>hello</Text></TouchableOpacity>
                 </View>
             </SafeAreaView>
-            <View style={{height: "35%", justifyContent: "center", alignItems: "center"}}>
-                <View style={styles.overlay}/>
+            <View style={{ height: "35%", justifyContent: "center", alignItems: "center" }}>
+                <View style={styles.overlay} />
                 <DateTimePicker
-                value={text}
-                display="spinner"
-                backgroundColor="transparent"
-                textColor="white"
-                onChange={handleDateChange}
-            />
+                    value={text}
+                    display="spinner"
+                    backgroundColor="transparent"
+                    textColor="white"
+                    onChange={handleDateChange}
+                />
             </View>
         </LinearGradient>
     )
