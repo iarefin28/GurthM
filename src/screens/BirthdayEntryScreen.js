@@ -1,13 +1,13 @@
-import React from "react";
-import { StyleSheet, Text, SafeAreaView, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useEffect } from "react";
+import { StyleSheet, Text, SafeAreaView, View, TextInput, TouchableOpacity, Animated } from 'react-native';
 
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from "expo-linear-gradient";
 
-import GurthInput from "./components/GurthInput";
+import GurthInput from "./components/GurthInput"
 import NextButton from "./components/NextButton";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -67,7 +67,7 @@ const BirthdayEntryScreen = () => {
                     />
                 </View>
             </SafeAreaView>
-            <View style={{ height: "35%", justifyContent: "center", alignItems: "center" }}>
+            <View style={styles.slideInView}>
                 <View style={styles.overlay} />
                 <DateTimePicker
                     value={text}
@@ -121,6 +121,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         opacity: 0.7,
     },
+    slideInView: {
+        height: "35%", 
+        justifyContent: "center", 
+        alignItems: "center"
+    }
 })
 
 export default BirthdayEntryScreen;

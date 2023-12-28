@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     prompt: {
         color: "white",
         fontFamily: 'RethinkSans-Bold',
-        fontSize: 28,
+        fontSize: 27,
         marginBottom: 10
     },
     purpose: {

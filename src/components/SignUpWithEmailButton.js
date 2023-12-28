@@ -17,7 +17,7 @@ const SignUpWithEmailButton = () => {
                 resizeMode="contain"
                 style={styles.emailIcon}
             />
-            <Text style={styles.buttonDescription}>Sign up with email</Text>
+            <Text style={styles.buttonDescription}>Sign up</Text>
         </TouchableOpacity>
     )
 }

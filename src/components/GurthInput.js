@@ -81,7 +81,7 @@ const GurthInput = ({ placeholder, type, onTextChange, date }) => {
                         onChangeText={handleInputChange}
                         maxLength={type==="code" ? 6 : 50}
                         editable={type==="birthday" ? false : true}
-                        keyboardType={type==="code" ? "numeric" : undefined}
+                        keyboardType={type==="code" || type==="phone" ? "numeric" : undefined}
                         keyboardAppearance={'dark'}
                     />
                 </View>

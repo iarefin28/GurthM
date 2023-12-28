@@ -34,15 +34,15 @@ const EmailEntryScreen = () => {
         >
             <SafeAreaView style={styles.root}>
                 <View style={styles.mainContainer}>
-                    <Text style={styles.prompt}>What's your email?</Text>
-                    <Text style={styles.purpose}>Enter the email where you can be contacted. This email is necesarry for login purposes.</Text>
+                    <Text style={styles.prompt}>What's your mobile number?</Text>
+                    <Text style={styles.purpose}>Enter the number where you can be contacted. This number will be used for sign up and logon purposes.</Text>
                     <GurthInput
-                        placeholder="Email"
-                        type="name"
+                        placeholder="Mobile Number"
+                        type="phone"
                         onTextChange={(textValue) => { handleChildInput(textValue) }}
                     />
                     <NextButton
-                        typeOfInput={"email"}
+                        typeOfInput={"mobile"}
                         input={text}
                         nextScreen="VerificationScreen"
                         ready={text ? false : true}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     prompt: {
         color: "white",
         fontFamily: 'RethinkSans-Bold',
-        fontSize: 28,
+        fontSize: 27,
         marginBottom: 10
     },
     purpose: {
