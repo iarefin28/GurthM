@@ -11,10 +11,13 @@ const GurthInput = ({ placeholder, type, onTextChange, date }) => {
 
     const inputRef = useRef(null);
 
-    useEffect(() => {
-        if(type !== "birthday")
-            inputRef.current.focus();
-    }, []);
+    // useEffect(() => {
+    //     if(type !== "birthday"){
+    //         setTimeout(() => {
+    //             inputRef.current?.focus();
+    //         }, 530 );
+    //     }
+    // }, []);
 
     const handleFocus = () => {
         setIsFocused(true)
@@ -59,7 +62,7 @@ const GurthInput = ({ placeholder, type, onTextChange, date }) => {
         <View style={styles.root}>
             <View style={styles.overlay} />
             <View style={[styles.inputMainContainer, isFocused && { borderColor: "white" }]}>
-                <View style={[styles.inputSubContainer, ((text && isFocused) || type === "password") ? { width: "80%" } : { width: "100%" }]}>
+                <View style={[styles.inputSubContainer, ((text && isFocused)) ? { width: "80%" } : { width: "100%" }]}>
                     {(isFocused || text) &&
                         <Text
                             style={[styles.inputType, isFocused ? { color: "white" } : { color: "gray" }]}>
@@ -79,6 +82,7 @@ const GurthInput = ({ placeholder, type, onTextChange, date }) => {
                         maxLength={type==="code" ? 6 : 50}
                         editable={type==="birthday" ? false : true}
                         keyboardType={type==="code" ? "numeric" : undefined}
+                        keyboardAppearance={'dark'}
                     />
                 </View>
                 {text && isFocused && type === "name" &&
@@ -118,7 +122,8 @@ const styles = new StyleSheet.create({
         marginLeft: 10,
         height: "100%",
         flexDirection: "column",
-        justifyContent: "center"
+        justifyContent: "center",
+        backgroundColor: "white"
     },
     inputType: {
         height: "35%",
