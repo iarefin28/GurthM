@@ -123,7 +123,6 @@ const styles = new StyleSheet.create({
         height: "100%",
         flexDirection: "column",
         justifyContent: "center",
-        backgroundColor: "white"
     },
     inputType: {
         height: "35%",
