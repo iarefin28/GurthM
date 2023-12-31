@@ -5,10 +5,10 @@ import { StyleSheet, Text, View, Image, useWindowDimensions, Animated, Easing } 
 
 import Logo from '../../assets/Logo.png';
 
-import AppleLoginButton from "./components/AppleLoginButton";
-import GoogleLoginButton from "./components/GoogleLoginButton";
-import SignUpWithEmailButton from "./components/SignUpWithEmailButton";
-import LoginWithEmailButton from "./components/LogInWithEmailButton.js";
+import AppleLoginButton from "../components/AppleLoginButton.js";
+import GoogleLoginButton from "../components/GoogleLoginButton.js";
+import SignUpWithEmailButton from "../components/SignUpWithEmailButton.js";
+import LoginWithEmailButton from "../components/LogInWithEmailButton.js";
 
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from "expo-linear-gradient";

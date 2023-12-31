@@ -6,7 +6,7 @@ const GoogleLoginButton = () => {
     return (
         <TouchableOpacity onPress={null} style={styles.buttonContainer}>
             <Image
-                source={require('../../../assets/GoogleButtonIcon.png')}
+                source={require('../../assets/GoogleButtonIcon.png')}
                 resizeMode="contain"
                 style={styles.googleIcon}
             />

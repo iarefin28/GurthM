@@ -3,9 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet, Text, TouchableOpacity, Keyboard } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { AccountCreationContext } from "../../contexts/AccountCreationContext";
+import { AccountCreationContext } from "../contexts/AccountCreationContext";
 import { verifyPhoneNumber } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
 const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
     const navigation = useNavigation()

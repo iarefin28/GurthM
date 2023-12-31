@@ -13,6 +13,7 @@ import PasswordEntryScreen from './src/screens/PasswordEntryScreen';
 import BirthdayEntryScreen from './src/screens/BirthdayEntryScreen';
 import EmailEntryScreen from './src/screens/EmailEntryScreen';
 import VerificationScreen from './src/screens/VerficationScreen';
+import PrivacyTermsScreen from './src/screens/PrivacyTermsScreen';
 import * as Font from 'expo-font';
 
 import { AccountCreationContext } from './src/contexts/AccountCreationContext';
@@ -46,6 +47,7 @@ export default function App() {
             <Stack.Screen name="BirthdayEntryScreen" component={BirthdayEntryScreen} />
             <Stack.Screen name="EmailEntryScreen" component={EmailEntryScreen} />
             <Stack.Screen name="VerificationScreen" component={VerificationScreen} />
+            <Stack.Screen name="PrivacyTermsScreen" component={PrivacyTermsScreen} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>

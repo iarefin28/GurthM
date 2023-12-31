@@ -4,8 +4,8 @@ import { StyleSheet, Text, SafeAreaView, View, TextInput, TouchableOpacity, Anim
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from "expo-linear-gradient";
 
-import GurthInput from "./components/GurthInput"
-import NextButton from "./components/NextButton";
+import GurthInput from "../components/GurthInput.js"
+import NextButton from "../components/NextButton.js";
 
 import { useState, useContext, useRef } from "react";
 

@@ -1,17 +1,16 @@
 import React from "react";
+import { useContext } from "react";
 import { StyleSheet, Text, SafeAreaView, View, TextInput } from 'react-native';
 
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from "expo-linear-gradient";
 
-import GurthInput from "../components/GurthInput.js";
-import NextButton from "../components/NextButton.js";
+import { AccountCreationContext } from "../contexts/AccountCreationContext";
+import CreateAccountButton from "../components/CreateAccountButton.js";
 
-import { useState } from "react";
-
-const NameEntryScreen = () => {
+const PrivacyTermsScreen = () => {
+    const { name } = useContext(AccountCreationContext)
     const navigation = useNavigation()
-    const[text, setText] = useState("")
 
     useFocusEffect(() => {
         navigation.setOptions({
@@ -20,10 +19,6 @@ const NameEntryScreen = () => {
             headerTitle: '',
         });
     });
-
-    const handleChildInput = (input) => {
-        setText(input)
-    }
 
     return (
         <LinearGradient
@@ -34,19 +29,17 @@ const NameEntryScreen = () => {
         >
             <SafeAreaView style={styles.root}>
                 <View style={styles.mainContainer}>
-                    <Text style={styles.prompt}>What's your name?</Text>
-                    <Text style={styles.purpose}>Add your name so we know what to call you.</Text>
-                    <GurthInput
-                        placeholder="Full name"
-                        type="name"
-                        onTextChange={(textValue) => { handleChildInput(textValue) }}
-                    />
-                    <NextButton
-                        typeOfInput={"name"}
-                        input={text}
-                        nextScreen="PasswordEntryScreen"
-                        ready={text ? false : true}
-                    />
+                    <Text style={styles.prompt}>Agree to Gurth's terms and policies</Text>
+                    <Text style={styles.purpose}>
+                        By tapping I agree, you agree to create an account and to Gurth's Terms, Privacy Policy,
+                        and Cookies Policy.
+                    </Text>
+                    <Text style={styles.purpose}>
+                        The Privacy Policy describes the ways we can use the information we collect 
+                        when you create an account. For example, we use this information to provide, personalize
+                        and improve our product. 
+                    </Text>
+                    <CreateAccountButton/>
                 </View>
             </SafeAreaView>
         </LinearGradient>
@@ -75,22 +68,9 @@ const styles = StyleSheet.create({
         fontFamily: "RethinkSans",
         fontSize: 14,
         marginBottom: 20
-    },
-    inputContainer:{
-        backgroundColor: "black",
-        opacity: 0.3
-
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: "white",
-        borderRadius: 5,
-        height: 60,
-        color: "white",
-        fontFamily: "RethinkSans"
     }
 })
 
-export default NameEntryScreen;
+export default PrivacyTermsScreen;
 
 

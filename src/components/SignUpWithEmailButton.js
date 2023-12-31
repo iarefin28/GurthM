@@ -13,7 +13,7 @@ const SignUpWithEmailButton = () => {
     return (
         <TouchableOpacity onPress={navigateToInformationEntryScreen} style={styles.buttonContainer}>
             <Image
-                source={require('../../../assets/EmailIconWhite.png')}
+                source={require('../../assets/EmailIconWhite.png')}
                 resizeMode="contain"
                 style={styles.emailIcon}
             />
