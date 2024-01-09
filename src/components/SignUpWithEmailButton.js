@@ -7,7 +7,7 @@ const SignUpWithEmailButton = () => {
     const navigation = useNavigation()
 
     const navigateToInformationEntryScreen = () => {
-        navigation.navigate('NameEntryScreen');
+        navigation.navigate('NameEntryScreen');  
     };
 
     return (

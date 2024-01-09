@@ -7,6 +7,8 @@ export const AccountCreationProvider = ({ children }) => {
   const [password, setPassword] = useState("");
   const [birthday, setBirthday] = useState(new Date())
   const [mobile, setMobile] = useState("");
+  const [verificationId, setVerificationId] = useState("");
+  const [code, setCode] = useState("");
 
   const updateName = (input) => {
     setName(input);
@@ -24,8 +26,17 @@ export const AccountCreationProvider = ({ children }) => {
     setMobile(input);
   }
 
+  const updateVerificationId = (input) => { 
+    setVerificationId(input);
+  }
+
+  const updateCode = (input) => {
+    setCode(input);
+  }
+
+
   return (
-    <AccountCreationContext.Provider value={{ name, updateName, password, updatePassword, birthday, updateBirthday, mobile, updateMobile }}>
+    <AccountCreationContext.Provider value={{ name, updateName, password, updatePassword, birthday, updateBirthday, mobile, updateMobile, verificationId, updateVerificationId, code, updateCode }}>
       {children}
     </AccountCreationContext.Provider>
   );

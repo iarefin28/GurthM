@@ -1,54 +1,61 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet, Text, TouchableOpacity, Keyboard } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Keyboard, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import { AccountCreationContext } from "../contexts/AccountCreationContext";
-import { verifyPhoneNumber } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { signInWithPhoneNumber, RecaptchaVerifier, PhoneAuthProvider, signInWithCredential } from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_APP } from "../../FirebaseConfig";
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 
 const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
     const navigation = useNavigation()
     const auth = FIREBASE_AUTH
-    const { updateName, updatePassword, updateBirthday, updateMobile, name, password, birthday, mobile } = useContext(AccountCreationContext);
+    const { updateName, updatePassword, updateBirthday, updateMobile, updateVerificationId, updateCode, name, password, birthday, mobile, verificationId, code } = useContext(AccountCreationContext);
 
-    console.log("Name: " + name + "\nPassword: " + password + "\nBirthday: " + birthday + "\nMobile: " + mobile)
+    console.log("Name: " + name + "\nPassword: " + password + "\nBirthday: " + birthday + "\nMobile: " + mobile + "\nID: " + verificationId + "\nCode" + code)
 
+    const recaptchaVerifier = useRef(null);
 
-    async function sendVerificationCode() {
+    const sendVerification = async () => {
+        const formattedPhoneNumber = `+1${mobile}`;
+
         try {
-          // Request to send a verification code to the provided phone number
-          const confirmation = await verifyPhoneNumber(auth, input);
-      
-          // Return the confirmation object, which you'll need to verify the code later
-          return confirmation;
-        } catch (error) {
-          console.error('Error sending verification code:', error);
-          throw error;
+            const phoneProvider = new PhoneAuthProvider(FIREBASE_AUTH);
+            const verificationId = await phoneProvider.verifyPhoneNumber(
+                formattedPhoneNumber,
+                recaptchaVerifier.current
+            );
+            updateVerificationId(verificationId)
+        } catch (err) {
+            console.log(err)
         }
-      }
+    }
 
-    const handleNext = () => {
+    const confirmVerification = async () => {
+        try {
+            const credential = PhoneAuthProvider.credential(verificationId, code);
+            await signInWithCredential(FIREBASE_AUTH, credential);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleNext = async () => {
         if (typeOfInput === "name") updateName(input)
         if (typeOfInput === "password") updatePassword(input)
         if (typeOfInput === "birthday") updateBirthday(input)
 
         if (typeOfInput === "mobile") {
             updateMobile(input)
-            sendVerificationCode()
-                .then((confirmation) => {
-                    console.log('Verification code sent successfully. Confirmation:', confirmation);
-                    // You'll typically navigate to the verification screen here
-                })
-                .catch((error) => {
-                    // Handle any errors, such as invalid phone numbers or rate limiting
-                    console.error('Error sending verification code:', error);
-                });
-
+            sendVerification()
         }
 
-
-
+        if (typeOfInput === "code") {
+            updateCode(input)
+            confirmVerification()
+        }
+ 
         Keyboard.dismiss()
         navigation.navigate(nextScreen);
     };
@@ -68,6 +75,7 @@ const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
                     Next
                 </Text>
             </LinearGradient>
+            <FirebaseRecaptchaVerifierModal ref={recaptchaVerifier} firebaseConfig={FIREBASE_APP.options} />
         </TouchableOpacity>
     )
 }
