@@ -8,6 +8,10 @@ import { signInWithPhoneNumber, RecaptchaVerifier, PhoneAuthProvider, signInWith
 import { FIREBASE_AUTH, FIREBASE_APP } from "../../FirebaseConfig";
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 
+import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
+
+import { db } from "../../FirebaseConfig";
+
 const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
     const navigation = useNavigation()
     const auth = FIREBASE_AUTH
@@ -17,8 +21,9 @@ const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
 
     const recaptchaVerifier = useRef(null);
 
-    const sendVerification = async () => {
-        const formattedPhoneNumber = `+1${mobile}`;
+    const sendVerification = async (input) => {
+        const formattedPhoneNumber = `+1${input}`;
+        console.log("Formatted phone number: ", formattedPhoneNumber)
 
         try {
             const phoneProvider = new PhoneAuthProvider(FIREBASE_AUTH);
@@ -29,6 +34,21 @@ const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
             updateVerificationId(verificationId)
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    async function addUser(fullName, password, birthday, number, verified) {
+        try {
+            const docRef = await addDoc(collection(db, "users"), {
+                fullName: fullName,
+                password: password,
+                birthday: birthday,
+                phoneNumber: number,
+                verifiedLogin: verified
+            });
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
         }
     }
 
@@ -48,12 +68,13 @@ const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
 
         if (typeOfInput === "mobile") {
             updateMobile(input)
-            sendVerification()
+            sendVerification(input) //sending in input because there is no guarantee that mobile is up to date right away 
         }
 
         if (typeOfInput === "code") {
             updateCode(input)
             confirmVerification()
+            addUser(name, password, birthday, mobile, true)
         }
  
         Keyboard.dismiss()
@@ -75,7 +96,11 @@ const NextButton = ({ typeOfInput, input, nextScreen, ready }) => {
                     Next
                 </Text>
             </LinearGradient>
-            <FirebaseRecaptchaVerifierModal ref={recaptchaVerifier} firebaseConfig={FIREBASE_APP.options} />
+            <FirebaseRecaptchaVerifierModal 
+                ref={recaptchaVerifier} 
+                firebaseConfig={FIREBASE_APP.options} 
+                attemptInvisibleVerification={true | false}
+            />
         </TouchableOpacity>
     )
 }

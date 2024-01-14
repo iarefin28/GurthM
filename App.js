@@ -16,12 +16,15 @@ import VerificationScreen from './src/screens/VerficationScreen';
 import PrivacyTermsScreen from './src/screens/PrivacyTermsScreen';
 import * as Font from 'expo-font';
 
+import LoggedInWrapper from './src/screens/LoggedInWrapper';
+
 import { AccountCreationContext } from './src/contexts/AccountCreationContext';
 import { AccountCreationProvider } from './src/contexts/AccountCreationContext';
 
 export default function App() {
   const Stack = createNativeStackNavigator()
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [isSignedIn, setSignIn] = useState(true);
 
   const loadFontsAsync = async () => {
     await Font.loadAsync({
@@ -38,19 +41,27 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <AccountCreationProvider>
-      <NavigationContainer>
-        <View style={styles.root}>
-          <Stack.Navigator initialRouteName="SignUpScreen">
-            <Stack.Screen name="SignInS" component={SignInScreen} />
-            <Stack.Screen name="NameEntryScreen" component={NameEntryScreen} />
-            <Stack.Screen name="PasswordEntryScreen" component={PasswordEntryScreen} />
-            <Stack.Screen name="BirthdayEntryScreen" component={BirthdayEntryScreen} />
-            <Stack.Screen name="EmailEntryScreen" component={EmailEntryScreen} />
-            <Stack.Screen name="VerificationScreen" component={VerificationScreen} />
-            <Stack.Screen name="PrivacyTermsScreen" component={PrivacyTermsScreen} />
-          </Stack.Navigator>
-        </View>
-      </NavigationContainer>
+        <NavigationContainer>
+          <View style={styles.root}>
+            <Stack.Navigator initialRouteName="SignUpScreen">
+              {isSignedIn ? (
+                <Stack.Screen name="LoggedInWrapper" component={LoggedInWrapper}/>
+              ) : (
+
+                <>
+                  <Stack.Screen name="SignInScren" component={SignInScreen} />
+                  <Stack.Screen name="NameEntryScreen" component={NameEntryScreen} />
+                  <Stack.Screen name="PasswordEntryScreen" component={PasswordEntryScreen} />
+                  <Stack.Screen name="BirthdayEntryScreen" component={BirthdayEntryScreen} />
+                  <Stack.Screen name="EmailEntryScreen" component={EmailEntryScreen} />
+                  <Stack.Screen name="VerificationScreen" component={VerificationScreen} />
+                  <Stack.Screen name="PrivacyTermsScreen" component={PrivacyTermsScreen} />
+                </>
+              )
+              }
+            </Stack.Navigator>
+          </View>
+        </NavigationContainer>
       </AccountCreationProvider>
     )
   }
