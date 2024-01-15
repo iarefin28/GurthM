@@ -16,19 +16,16 @@ const ScreenOne = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <View style={styles.slide}>
                 <View style={styles.swipeableArea}>
-
-                
-                <PanGestureHandler onHandlerStateChange={handleSwipe} >
-                    <View style={{width: "90%", backgroundColor: "white", height: "100%"}}>
-                        <Text>hi</Text>
-                    </View>
-                </PanGestureHandler>
+                    <PanGestureHandler onHandlerStateChange={handleSwipe} >
+                        <View style={{ width: "90%", backgroundColor: "white", height: "100%" }}>
+                            <Text>hi</Text>
+                        </View>
+                    </PanGestureHandler>
                 </View>
             </View>
         </GestureHandlerRootView>
     );
 };
-
 
 const ScreenTwo = () => (
     <View style={styles.slide}>
@@ -36,68 +33,51 @@ const ScreenTwo = () => (
     </View>
 );
 
-const ScreenThree = () => (
-    <View style={styles.slide}>
-        <Text style={styles.text}>Screen Three</Text>
-    </View>
-);
 
-const handleBegin = () => {
+const handleScreenChangeBegin = (e, state, context) => {
+    e.persist()
+    console.log(e)
     console.log("hi")
+}
+
+const handleScreenChangeEnd = (e, state, context) => {
+    console.log(context)
+    console.log("bye")
 }
 
 const HomeScreen = () => {
     const [gMiniScreen, setScreen] = useState("Screen 1")
-    const fadeAnim = useRef(new Animated.Value(1)).current; // Initial opacity is 1
-
-
-    const fadeOut = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-        }).start();
-    };
-
-    const fadeIn = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true,
-        }).start();
-    };
-
 
     const handleIndexChange = (index) => {
-        fadeOut()
-        setTimeout(() => {
-
-
-            switch (index) {
-                case 0:
-                    setScreen("Today's Tasks");
-                    break;
-                case 1:
-                    setScreen("Agenda");
-                    break;
-                default:
-                    setScreen("Other");
-                    break;
-            }
-            fadeIn()
-        }, 20)
+        switch (index) {
+            case 0:
+                setScreen("Today's Tasks");
+                break;
+            case 1:
+                setScreen("Agenda");
+                break;
+            default:
+                setScreen("Other");
+                break;
+        }
     };
 
     return (
         <View style={styles.GurthScreen}>
-            <Animated.View style={{ backgroundColor: "black", height: "4%", justifyContent: "center", alignItems: "center", opacity: fadeAnim }}>
+            <Animated.View style={{ backgroundColor: "black", height: "4%", justifyContent: "center", alignItems: "center" }}>
                 <Text style={{ fontFamily: "RethinkSans", color: "white" }}>{gMiniScreen}</Text>
             </Animated.View>
-            <Swiper style={styles.wrapper} showsButtons={false} loop={false} showsPagination={false} onIndexChanged={handleIndexChange}
-                onScrollBeginDrag={handleBegin}>
+            <Swiper
+                style={styles.wrapper}
+                showsButtons={false}
+                loop={false}
+                showsPagination={false}
+                onIndexChanged={handleIndexChange}
+                onScrollBeginDrag={handleScreenChangeBegin}
+                onMomentumScrollEnd={handleScreenChangeEnd}
+            >
                 <ScreenOne />
                 <ScreenTwo />
-                <ScreenThree />
             </Swiper>
         </View>
     );
@@ -128,9 +108,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         width: "100%",
         alignItems: "center",
-
-
-
     }
 });
 
